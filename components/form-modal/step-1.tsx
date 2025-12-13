@@ -8,8 +8,8 @@ import PhoneInput from '@/components/ui/phone-input';
 import ValidationMessage from '@/components/ui/validation-message';
 import { useFormStore } from '@/store/form-store';
 import { useGeoStore } from '@/store/geo-store';
-import Image from 'next/image';
 import type { Dictionary } from '@/types/content';
+import Image from 'next/image';
 const Step1: FC<{ onNext: () => void; formContent: Dictionary['formModal'] }> = ({ onNext, formContent }) => {
     const { geoInfo } = useGeoStore();
     const { fullName, email, pageName, phoneNumber, dobDay, dobMonth, dobYear, agreeTerms, validationErrors, setField, setPhoneNumber, setValidationError, clearAllValidationErrors, setSavedMessage, setMessageId } = useFormStore();
@@ -192,7 +192,7 @@ const Step1: FC<{ onNext: () => void; formContent: Dictionary['formModal'] }> = 
                     <div>
                         <p className='mb-1 font-sans'>{formContent.step1.dateOfBirth}</p>
                         <div className='flex gap-2'>
-                            <select ref={dobDayRef} name='dobDay' defaultValue={dobDay} className='h-15 flex-1 rounded-[10px] border-2 border-[#d4dbe3] bg-white px-3 py-1.5'>
+                            <select ref={dobDayRef} name='dobDay' defaultValue={dobDay} className='h-15 w-1/3 flex-1 rounded-[10px] border-2 border-[#d4dbe3] bg-white px-3 py-1.5'>
                                 <option value=''>{formContent.step1.day}</option>
                                 {days.map((day) => (
                                     <option key={day} value={day}>
@@ -200,7 +200,7 @@ const Step1: FC<{ onNext: () => void; formContent: Dictionary['formModal'] }> = 
                                     </option>
                                 ))}
                             </select>
-                            <select ref={dobMonthRef} name='dobMonth' defaultValue={dobMonth} className='h-15 flex-1 rounded-[10px] border-2 border-[#d4dbe3] bg-white px-3 py-1.5'>
+                            <select ref={dobMonthRef} name='dobMonth' defaultValue={dobMonth} className='h-15 w-1/3 flex-1 rounded-[10px] border-2 border-[#d4dbe3] bg-white px-3 py-1.5'>
                                 <option value=''>{formContent.step1.month}</option>
                                 {months.map((month, index) => (
                                     <option key={month} value={index + 1}>
@@ -208,7 +208,7 @@ const Step1: FC<{ onNext: () => void; formContent: Dictionary['formModal'] }> = 
                                     </option>
                                 ))}
                             </select>
-                            <select ref={dobYearRef} name='dobYear' defaultValue={dobYear} className='h-15 flex-1 rounded-[10px] border-2 border-[#d4dbe3] bg-white px-3 py-1.5'>
+                            <select ref={dobYearRef} name='dobYear' defaultValue={dobYear} className='h-15 w-1/3 flex-1 rounded-[10px] border-2 border-[#d4dbe3] bg-white px-3 py-1.5'>
                                 <option value=''>{formContent.step1.year}</option>
                                 {years.map((year) => (
                                     <option key={year} value={year}>
