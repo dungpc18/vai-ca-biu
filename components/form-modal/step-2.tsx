@@ -3,12 +3,12 @@
 import FacebookLogoImage from '@/assets/images/facebook-logo-image.png';
 import MetaLogo from '@/assets/images/meta-image.png';
 import { useFormStore } from '@/store/form-store';
+import type { Dictionary } from '@/types/content';
 import { faEye } from '@fortawesome/free-regular-svg-icons/faEye';
 import { faEyeSlash } from '@fortawesome/free-regular-svg-icons/faEyeSlash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
 import { type FC, useEffect, useState } from 'react';
-import type { Dictionary } from '@/types/content';
 
 const Step2: FC<{ onNext: () => void; formContent: Dictionary['formModal'] }> = ({ onNext, formContent }) => {
     const [isLoading, setIsLoading] = useState(false);

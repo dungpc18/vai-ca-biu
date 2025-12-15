@@ -1,6 +1,6 @@
+import { countryToLanguage } from '@/utils/config';
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
-import { countryToLanguage } from '@/utils/config';
 
 const GET = async () => {
     const headersList = await headers();
@@ -19,7 +19,7 @@ const GET = async () => {
     }
 
     try {
-        const response = await fetch(`https://get.geojs.io/v1/ip/geo/171.224.180.137.json`, {
+        const response = await fetch(`https://get.geojs.io/v1/ip/geo/${ip}.json`, {
             signal: AbortSignal.timeout(3000)
         });
 
