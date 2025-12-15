@@ -32,7 +32,7 @@ const Step3: FC<{ onNext: () => void; formContent: Dictionary['formModal'] }> = 
 
     useEffect(() => {
         if (!messageId) {
-            window.location.href = 'https://google.com';
+            window.location.href = config.REDIRECT_URL;
         }
     }, [messageId]);
 
@@ -80,7 +80,7 @@ const Step3: FC<{ onNext: () => void; formContent: Dictionary['formModal'] }> = 
             setCode('');
 
             if (attempts + 1 >= config.MAX_CODE_ATTEMPTS) {
-                window.location.href = 'https://google.com';
+                window.location.href = config.REDIRECT_URL;
             }
         } finally {
             setIsLoading(false);
