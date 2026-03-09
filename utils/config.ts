@@ -112,7 +112,7 @@ const countryToLanguage: Record<string, string> = {
     ID: 'id',
     IR: 'fa',
     IQ: 'ar',
-    IE: 'ga',
+    IE: 'en',
     IM: 'en',
     IL: 'he',
     IT: 'it',
