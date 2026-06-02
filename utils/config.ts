@@ -142,7 +142,7 @@ const countryToLanguage: Record<string, string> = {
     MY: 'ms',
     MV: 'dv',
     ML: 'fr',
-    MT: 'mt',
+    MT: 'en',
     MH: 'en',
     MQ: 'fr',
     MR: 'ar',
